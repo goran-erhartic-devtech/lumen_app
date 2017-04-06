@@ -12,9 +12,9 @@
 */
 
 $app->get('/', function () use ($app) {
-    return $app->version();
+    return $app->environment();
 });
+$app->get('/users','UserController@index');
+$app->post('/user','UserController@createUser');
 
-$app->get('/key', function() {
-    return str_random(32);
-});
+$app->get('user/{id}', 'EmployeeController@getOne');
