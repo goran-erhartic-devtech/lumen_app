@@ -18,7 +18,7 @@ class Employee extends Model implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $fillable = [
-        'name', 'age', 'project', 'department', 'isActive'
+        'name', 'age', 'jmbg', 'project', 'department', 'isActive'
     ];
 
     /**

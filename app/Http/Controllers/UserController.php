@@ -14,16 +14,24 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public $timestamps = false;
-    public function createUser(Request $request){
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createUser(Request $request)
+    {
         $user = User::create($request->all());
         return response()->json($user);
     }
 
-    public function index(){
-        $users  = User::all();
+    /**
+     * Get all users
+     */
+    public function getAll()
+    {
+        $users = User::all();
 
-        foreach ($users as $user){
+        foreach ($users as $user) {
             echo "<p> $user </p>";
         }
     }
