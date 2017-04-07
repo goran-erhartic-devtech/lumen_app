@@ -27,7 +27,9 @@ $app->post('/user', 'UserController@createUser');
 /*
  * Employee routes
  */
-$app->get('/employees', 'EmployeeController@getAll');
+//$app->get('/employees', 'EmployeeController@getAll');
+$app->get('/employees', ['middleware' => 'auth', 'uses' => 'EmployeeController@getAll']);
+
 $app->get('/employee/{id}', 'EmployeeController@getOne');
 $app->post('/employee', 'EmployeeController@create');
 $app->delete('/employee/{id}', 'EmployeeController@delete');
