@@ -1,1 +1,0 @@
-{"virtualbox":{"/home/vagrant/Code/lumen-app":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/Code/lumen-app","hostpath":"D:/PHP/Onboarding/lumen_app","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"D:/PHP/Onboarding/lumen_app","disabled":false,"__vagrantfile":true}}}
