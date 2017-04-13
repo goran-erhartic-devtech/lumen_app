@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Providers\CustomResponseProvider;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -10,36 +11,36 @@ class EmployeeController extends Controller
 {
     /**
      * Get one employee by ID
+     * @param CustomResponseProvider $res
      * @param $id
-     * @return mixed
+     * @return string
      */
-    public function getOne($id)
+    public function getOne(CustomResponseProvider $res, $id)
     {
         try {
             $employee = Employee::findOrFail($id);
-            return $employee;
+            return $res->jsonGetResponse($employee);
         } catch (ModelNotFoundException $e) {
             return $e->getMessage();
         }
     }
 
     /**
-     * Get all employees
+     * @param CustomResponseProvider $res
+     * @return string
      */
-    public function getAll()
+    public function getAll(CustomResponseProvider $res)
     {
         $employees = Employee::all();
-
-        foreach ($employees as $employee) {
-            echo "<p> $employee </p>";
-        }
+        return $res->jsonGetResponse($employees);
     }
 
     /**
+     * @param CustomResponseProvider $res
      * @param Request $request
      * @return string
      */
-    public function create(Request $request)
+    public function create(CustomResponseProvider $res, Request $request)
     {
 
         $this->validate($request, [
@@ -50,25 +51,32 @@ class EmployeeController extends Controller
         ]);
 
         Employee::create($request->all());
-        return "Employee '{$request['name']}' has been created successfully";
+        return $res->jsonPostResponse($request->all());
     }
 
     /**
+     * @param CustomResponseProvider $res
      * @param $id
      * @return string
      */
-    public function delete($id)
+    public function delete(CustomResponseProvider $res, $id)
     {
         try {
             $employee = Employee::findOrFail($id);
             $employee->delete();
-            return "{$employee['name']} - successfully deleted";
+            return $res->jsonDeleteResponse($employee);
         } catch (ModelNotFoundException $e) {
             return $e->getMessage();
         }
     }
 
-    public function update($id, Request $request)
+    /**
+     * @param CustomResponseProvider $res
+     * @param $id
+     * @param Request $request
+     * @return string
+     */
+    public function update(CustomResponseProvider $res, $id, Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -80,7 +88,7 @@ class EmployeeController extends Controller
             $employee = Employee::findOrFail($id);
             $newInfo = $request->all();
             $employee->fill($newInfo)->save();
-            return "Employee '{$request['name']}' has been edited successfully";
+            return $res->jsonPutResponse($employee);
         } catch (ModelNotFoundException $e) {
             return $e->getMessage();
         }
