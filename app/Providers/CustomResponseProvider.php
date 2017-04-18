@@ -10,51 +10,17 @@ namespace App\Providers;
 
 class CustomResponseProvider
 {
-    function jsonGetResponse($param)
+    private $out;
+
+    public function jsonResponse($is_success, $message, $param)
     {
         header('Content-type: application/json');
-        $out = array(
-            'success' => true,
-            'message' => "There are " . count($param) . " employees",
-            'data' => $param
+        $this->out = array(
+            'success' => $is_success,
+            'message' => $message,
+            'data' => json_decode($param) == null ? $param : json_decode($param)
         );
 
-        return json_encode($out);
-    }
-
-    function jsonPostResponse($param)
-    {
-        header('Content-type: application/json');
-        $out = array(
-            'success' => true,
-            'message' => "New user has been created",
-            'data' => $param
-        );
-
-        return json_encode($out);
-    }
-
-    function jsonDeleteResponse($param)
-    {
-        header('Content-type: application/json');
-        $out = array(
-            'success' => true,
-            'message' => "User has been deleted",
-            'data' => $param
-        );
-
-        return json_encode($out);
-    }
-
-    function jsonPutResponse($param)
-    {
-        header('Content-type: application/json');
-        $out = array(
-            'success' => true,
-            'message' => "User has been updated",
-            'data' => $param
-        );
-
-        return json_encode($out);
+        return json_encode($this->out);
     }
 }

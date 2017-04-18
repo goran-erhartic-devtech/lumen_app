@@ -6,6 +6,7 @@ use App\Employee;
 use App\Providers\CustomResponseProvider;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class EmployeeController extends Controller
 {
@@ -19,9 +20,10 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::findOrFail($id);
-            return $res->jsonGetResponse($employee);
+            return $res->jsonResponse(true, "Returned one employee", $employee);
         } catch (ModelNotFoundException $e) {
-            return $e->getMessage();
+            http_response_code(404);
+            die($res->jsonResponse(false, "There was an error while trying to retrieve the employee", $e->getMessage()));
         }
     }
 
@@ -32,7 +34,7 @@ class EmployeeController extends Controller
     public function getAll(CustomResponseProvider $res)
     {
         $employees = Employee::all();
-        return $res->jsonGetResponse($employees);
+        return $res->jsonResponse(true, "Returned " . count($employees) . " employees", $employees);
     }
 
     /**
@@ -42,16 +44,19 @@ class EmployeeController extends Controller
      */
     public function create(CustomResponseProvider $res, Request $request)
     {
+        try {
+            $this->validate($request, [
+                'name' => 'required|unique:employees',
+                'age' => 'required',
+                'jmbg' => 'required|digits:5|unique:employees',
+                'isActive' => 'required'
+            ]);
 
-        $this->validate($request, [
-            'name' => 'required|unique:employees',
-            'age' => 'required',
-            'jmbg' => 'required|digits:5|unique:employees',
-            'isActive' => 'required'
-        ]);
-
-        Employee::create($request->all());
-        return $res->jsonPostResponse($request->all());
+            Employee::create($request->all());
+            return $res->jsonResponse(true, "Created new employee", $request->all());
+        } catch (ValidationException $e) {
+            return $res->jsonResponse(false, "There was an error while trying to create new employee", $e->getResponse()->getContent());
+        }
     }
 
     /**
@@ -64,9 +69,10 @@ class EmployeeController extends Controller
         try {
             $employee = Employee::findOrFail($id);
             $employee->delete();
-            return $res->jsonDeleteResponse($employee);
+            return $res->jsonResponse(true, "Deleted employee", $employee);
         } catch (ModelNotFoundException $e) {
-            return $e->getMessage();
+            http_response_code(404);
+            die($res->jsonResponse(false, "There was an error while trying to delete employee", $e->getMessage()));
         }
     }
 
@@ -78,19 +84,25 @@ class EmployeeController extends Controller
      */
     public function update(CustomResponseProvider $res, $id, Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'age' => 'required',
-            'isActive' => 'required'
-        ]);
-
         try {
             $employee = Employee::findOrFail($id);
+
+            $this->validate($request, [
+                'name' => 'required|unique:employees',
+                'age' => 'required',
+                'jmbg' => 'required|digits:5|unique:employees',
+                'isActive' => 'required'
+            ]);
+
             $newInfo = $request->all();
             $employee->fill($newInfo)->save();
-            return $res->jsonPutResponse($employee);
+            return $res->jsonResponse(true, "Employee successfully updated", $employee);
         } catch (ModelNotFoundException $e) {
-            return $e->getMessage();
+            http_response_code(404);
+            die($res->jsonResponse(false, "There was an error while trying to update employee", $e->getMessage()));
+        } catch (ValidationException $e) {
+            return $res->jsonResponse(false, "There was an error while trying to update employee", $e->getResponse()->getContent());
+
         }
     }
 }
