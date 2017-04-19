@@ -11,10 +11,24 @@
 |
 */
 
+/*
+ * Index page
+ */
 $app->get('/', function () use ($app) {
     return $app->environment();
 });
-$app->get('/users','UserController@index');
-$app->post('/user','UserController@createUser');
 
-$app->get('user/{id}', 'EmployeeController@getOne');
+/*
+ * User routes
+ */
+$app->get('/users', 'UserController@index');
+$app->post('/user', 'UserController@createUser');
+
+/*
+ * Employee routes
+ */
+$app->get('/employees', 'EmployeeController@getAll');
+$app->get('/employee/{id}', 'EmployeeController@getOne');
+$app->post('/employee', 'EmployeeController@create');
+$app->delete('/employee/{id}', 'EmployeeController@delete');
+$app->put('/employee/{id}', 'EmployeeController@update');

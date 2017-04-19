@@ -15,6 +15,7 @@ $factory->define(App\Employee::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'age' => $faker->numberBetween(18, 50),
+        'jmbg' => $faker->randomNumber(5),
         'project' => $faker->word,
         'department' => $faker->word,
         'isActive' => $faker->numberBetween(0,1)
