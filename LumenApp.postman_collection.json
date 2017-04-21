@@ -1,0 +1,209 @@
+{
+	"variables": [],
+	"info": {
+		"name": "LumenApp",
+		"_postman_id": "cd430a3d-d867-ec23-e30e-b962faac8f63",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAll()",
+			"request": {
+				"url": "http://lumen.app/employees",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					},
+					{
+						"key": "login",
+						"value": "yeah",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "asdfasdf",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "age",
+							"value": "goran",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "project",
+							"value": "qq",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "department",
+							"value": "ww",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "isActive",
+							"value": "1",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "jmbg",
+							"value": "asdff",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getOne(id)",
+			"request": {
+				"url": "http://lumen.app/employee/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete()",
+			"request": {
+				"url": "http://lumen.app/employee/10",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create()",
+			"request": {
+				"url": "http://lumen.app/employee",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "NameTest",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "age",
+							"value": "33",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "project",
+							"value": "Project",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "department",
+							"value": "Depart",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "isActive",
+							"value": "1",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "jmbg",
+							"value": "42153",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update(id)",
+			"request": {
+				"url": "http://lumen.app/employee/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Goran",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "age",
+							"value": "31",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "jmgb",
+							"value": "98765",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "project",
+							"value": "pro1",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "department",
+							"value": "dep1",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "isActive",
+							"value": "1",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
