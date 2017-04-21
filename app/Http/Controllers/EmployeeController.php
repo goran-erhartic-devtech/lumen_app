@@ -6,7 +6,6 @@ use App\Employee;
 use App\Providers\CustomResponseProvider;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class EmployeeController extends Controller
 {
